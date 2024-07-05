@@ -35,21 +35,26 @@ class MyApp extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
               ))),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/products': (context) =>
+            const ProductsListScreen(title: 'Flutter Demo Home Page'),
+        '/product': (context) => const ProductScreen()
+      },
+      initialRoute: '/products',
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class ProductsListScreen extends StatefulWidget {
+  const ProductsListScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ProductsListScreen> createState() => _ProductsListScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ProductsListScreenState extends State<ProductsListScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -62,16 +67,54 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.separated(
           itemCount: 15,
           separatorBuilder: (context, index) => const Divider(),
-          itemBuilder: (context, index) => ListTile(
+          itemBuilder: (context, index) {
+            String productName = 'Product ${index + 1}';
+
+            return ListTile(
               leading: SvgPicture.asset(
                 'assets/images/cat.svg',
                 height: 40,
                 width: 40,
               ),
               trailing: const Icon(Icons.arrow_forward_ios),
-              title: Text('Product', style: theme.textTheme.bodyMedium),
+              title: Text(productName, style: theme.textTheme.bodyMedium),
               subtitle:
-                  Text('some description', style: theme.textTheme.labelSmall))),
+                  Text('some description', style: theme.textTheme.labelSmall),
+              onTap: () => {
+                Navigator.of(context)
+                    .pushNamed('/product', arguments: productName)
+              },
+            );
+          }),
+    );
+  }
+}
+
+class ProductScreen extends StatefulWidget {
+  const ProductScreen({super.key});
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  String? productName;
+
+  @override
+  void didChangeDependencies() {
+    final args = ModalRoute.of(context)?.settings.arguments;
+
+    assert(args != null && args is String, 'Аргумент должен быть строкой');
+
+    productName = args as String;
+    setState(() {});
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(productName ?? '...')),
     );
   }
 }
