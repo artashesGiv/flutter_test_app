@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:test_project/repositories/models/product_model.dart';
+import 'package:test_project/repositories/products/products.dart';
 
-class ProductsRepository {
+class ProductsRepository implements AbstractProductsRepository {
+  @override
   Future<List<ProductModel>> getProducts() async {
     try {
       final response = await Dio().get('https://fakestoreapi.com/products');

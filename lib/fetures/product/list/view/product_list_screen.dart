@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_project/repositories/models/product_model.dart';
-import 'package:test_project/repositories/products/products_repository.dart';
+import 'package:test_project/repositories/products/products.dart';
 
 import '../widgets/product_tile.dart';
 
