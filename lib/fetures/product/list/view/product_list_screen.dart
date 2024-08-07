@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:test_project/repositories/products/products.dart';
 
 import '../widgets/product_tile.dart';
@@ -42,7 +43,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   }
 
   Future<void> _loadProducts() async {
-    _productsList = await ProductsRepository().getProducts();
+    _productsList = await GetIt.I<AbstractProductsRepository>().getProducts();
     setState(() {});
   }
 }
