@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_project/repositories/models/product_model.dart';
+import 'package:test_project/repositories/products/products_repository.dart';
 
 import '../widgets/product_tile.dart';
 
@@ -13,21 +15,35 @@ class ProductsListScreen extends StatefulWidget {
 
 class _ProductsListScreenState extends State<ProductsListScreen> {
   @override
+  void initState() {
+    _loadProducts();
+    super.initState();
+  }
+
+  List<ProductModel>? _productsList;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
-        leading: const Icon(Icons.arrow_back),
       ),
-      body: ListView.separated(
-          itemCount: 15,
-          separatorBuilder: (context, index) => const Divider(),
-          itemBuilder: (context, index) {
-            String productName = 'Product ${index + 1}';
+      body: _productsList == null
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.separated(
+              itemCount: _productsList!.length,
+              separatorBuilder: (context, index) => const Divider(),
+              itemBuilder: (context, index) {
+                final product = _productsList![index];
 
-            return ProductTile(productName: productName);
-          }),
+                return ProductTile(product: product);
+              }),
     );
+  }
+
+  Future<void> _loadProducts() async {
+    _productsList = await ProductsRepository().getProducts();
+    setState(() {});
   }
 }

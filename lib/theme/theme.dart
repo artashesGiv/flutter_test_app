@@ -4,7 +4,10 @@ const baseTextColor = Colors.black87;
 const secondaryTextColor = Colors.black54;
 
 final lightTheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+    ),
     useMaterial3: true,
     dividerTheme: const DividerThemeData(
       color: secondaryTextColor,
@@ -14,7 +17,7 @@ final lightTheme = ThemeData(
     ),
     textTheme: const TextTheme(
         bodyMedium: TextStyle(
-          fontSize: 32,
+          fontSize: 28,
           fontWeight: FontWeight.w700,
           color: baseTextColor,
         ),
