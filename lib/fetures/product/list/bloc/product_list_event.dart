@@ -1,5 +1,9 @@
 part of 'product_list_bloc.dart';
 
-class ProductListEvent {}
+abstract class ProductListEvent {}
 
-class LoadProductList extends ProductListEvent {}
+class LoadProductList extends ProductListEvent {
+  LoadProductList({this.compliter});
+
+  final Completer? compliter;
+}

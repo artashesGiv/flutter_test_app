@@ -16,9 +16,13 @@ final lightTheme = ThemeData(
       iconColor: baseTextColor,
     ),
     textTheme: const TextTheme(
-        bodyMedium: TextStyle(
+        headlineMedium: TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.w700,
+          color: baseTextColor,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 24,
           color: baseTextColor,
         ),
         labelSmall: TextStyle(

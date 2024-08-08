@@ -1,4 +1,6 @@
-class ProductModel {
+import 'package:equatable/equatable.dart';
+
+class ProductModel extends Equatable {
   const ProductModel({
     required this.id,
     required this.title,
@@ -25,4 +27,7 @@ class ProductModel {
       image: json['image'],
     );
   }
+
+  @override
+  List<Object?> get props => [id, title, price, category, description, image];
 }

@@ -21,7 +21,7 @@ class ProductTile extends StatelessWidget {
       trailing: const Icon(Icons.arrow_forward_ios),
       title: Text(
         product.title,
-        style: theme.textTheme.bodyMedium,
+        style: theme.textTheme.headlineMedium,
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(product.description,
