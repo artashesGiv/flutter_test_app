@@ -17,16 +17,26 @@ final lightTheme = ThemeData(
     ),
     textTheme: const TextTheme(
         headlineMedium: TextStyle(
-          fontSize: 28,
+          fontSize: 24,
           fontWeight: FontWeight.w700,
           color: baseTextColor,
         ),
         bodyMedium: TextStyle(
-          fontSize: 24,
+          fontSize: 20,
           color: baseTextColor,
+        ),
+        titleSmall: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: baseTextColor,
+        ),
+        labelMedium: TextStyle(
+          color: secondaryTextColor,
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
         ),
         labelSmall: TextStyle(
           color: secondaryTextColor,
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.normal,
         )));

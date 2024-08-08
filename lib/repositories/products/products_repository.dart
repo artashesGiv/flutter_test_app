@@ -7,17 +7,26 @@ class ProductsRepository implements AbstractProductsRepository {
   final Dio dio;
 
   @override
-  Future<List<ProductModel>> getProducts() async {
+  Future<List<Product>> getProducts() async {
     try {
       final response = await dio.get('https://fakestoreapi.com/products');
-      if (response.statusCode == 200) {
-        List<dynamic> data = response.data;
-        return data.map((item) => ProductModel.fromJson(item)).toList();
-      } else {
-        throw Exception('Не удалось загрузить продукты');
-      }
+
+      List<dynamic> data = response.data;
+      return data.map((item) => Product.fromJson(item)).toList();
     } catch (e) {
       throw Exception('Не удалось загрузить продукты: $e');
+    }
+  }
+
+  @override
+  Future<ProductItem> getProduct(int id) async {
+    try {
+      final response = await dio.get('https://fakestoreapi.com/products/$id');
+      dynamic data = response.data;
+
+      return ProductItem.fromJson(data);
+    } catch (error) {
+      throw Exception('Не удалось загрузить продукт: $error');
     }
   }
 }

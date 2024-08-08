@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:test_project/fetures/product/list/bloc/product_list_bloc.dart';
 import 'package:test_project/repositories/products/products.dart';
+import 'package:test_project/shared/widgets/custom_error_widget.dart';
 
+import '../bloc/product_list_bloc.dart';
 import '../widgets/widgets.dart';
 
 class ProductsListScreen extends StatefulWidget {
@@ -29,12 +30,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
+          title: const Text('Product list'),
         ),
         body: RefreshIndicator(
           onRefresh: () async {
@@ -56,26 +55,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                     });
               }
               if (state is ProductListLoadingError) {
-                return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Что-то пошло не так',
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    Text(
-                      'Попробуйте еще раз',
-                      style: theme.textTheme.labelSmall,
-                    ),
-                    const SizedBox(height: 30),
-                    TextButton(
-                        onPressed: () =>
-                            {_productListBloc.add(LoadProductList())},
-                        child: const Text('Попробовать еще раз'))
-                  ],
-                ));
+                return CustomErrorWidget(
+                    onUpdate: () => {_productListBloc.add(LoadProductList())});
               }
 
               return const Center(child: CircularProgressIndicator());
