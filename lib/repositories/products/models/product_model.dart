@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'product_model.g.dart';
+
+@JsonSerializable()
 class Rating {
   final double rate;
   final int count;
@@ -9,21 +13,12 @@ class Rating {
     required this.count,
   });
 
-  factory Rating.fromJson(Map<String, dynamic> json) {
-    return Rating(
-      rate: json['rate'].toDouble(),
-      count: json['count'],
-    );
-  }
+  factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'rate': rate,
-      'count': count,
-    };
-  }
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
 }
 
+@JsonSerializable()
 class Product extends Equatable {
   const Product({
     required this.id,
@@ -41,21 +36,16 @@ class Product extends Equatable {
   final String description;
   final String image;
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'],
-      title: json['title'],
-      price: json['price'].toDouble(),
-      description: json['description'],
-      category: json['category'],
-      image: json['image'],
-    );
-  }
+  factory Product.fromJson(Map<String, dynamic> json) =>
+      _$ProductFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProductToJson(this);
 
   @override
   List<Object?> get props => [id, title, price, category, description, image];
 }
 
+@JsonSerializable()
 class ProductDetails extends Product {
   final Rating rating;
 
@@ -69,17 +59,11 @@ class ProductDetails extends Product {
     required this.rating,
   });
 
-  factory ProductDetails.fromJson(Map<String, dynamic> json) {
-    return ProductDetails(
-      id: json['id'],
-      title: json['title'],
-      price: json['price'].toDouble(),
-      description: json['description'],
-      category: json['category'],
-      image: json['image'],
-      rating: Rating.fromJson(json['rating']),
-    );
-  }
+  factory ProductDetails.fromJson(Map<String, dynamic> json) =>
+      _$ProductDetailsFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$ProductDetailsToJson(this);
 
   @override
   List<Object?> get props => super.props..add(rating);

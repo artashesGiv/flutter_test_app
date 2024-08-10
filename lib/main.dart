@@ -14,20 +14,21 @@ import 'firebase_options.dart';
 import 'repositories/products/products.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // talker init
   final talker = TalkerFlutter.init();
   GetIt.I.registerSingleton(talker);
   GetIt.I<Talker>().debug('APP START');
 
-  // inti firebase
-  WidgetsFlutterBinding.ensureInitialized();
+  // init firebase
   final app = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   talker.info(app.options.projectId);
 
-  // init dio & set talker interseption
+  // init dio & set talker interceptor
   final dio = Dio();
   dio.interceptors.add(
     TalkerDioLogger(
@@ -50,6 +51,12 @@ void main() async {
 
   // set flutter error talker handler
   FlutterError.onError = (details) => GetIt.I<Talker>().handle(details);
-  runZonedGuarded(() => runApp(const App()),
-      (error, stack) => GetIt.I<Talker>().handle(error, stack));
+
+  // Run `runApp` within `runZonedGuarded` to ensure consistent zone
+  runZonedGuarded(
+    () {
+      runApp(const App());
+    },
+    (error, stack) => GetIt.I<Talker>().handle(error, stack),
+  );
 }
