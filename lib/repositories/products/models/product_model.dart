@@ -56,10 +56,10 @@ class Product extends Equatable {
   List<Object?> get props => [id, title, price, category, description, image];
 }
 
-class ProductItem extends Product {
+class ProductDetails extends Product {
   final Rating rating;
 
-  const ProductItem({
+  const ProductDetails({
     required super.id,
     required super.title,
     required super.price,
@@ -69,8 +69,8 @@ class ProductItem extends Product {
     required this.rating,
   });
 
-  factory ProductItem.fromJson(Map<String, dynamic> json) {
-    return ProductItem(
+  factory ProductDetails.fromJson(Map<String, dynamic> json) {
+    return ProductDetails(
       id: json['id'],
       title: json['title'],
       price: json['price'].toDouble(),

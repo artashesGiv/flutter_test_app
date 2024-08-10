@@ -19,12 +19,12 @@ class ProductsRepository implements AbstractProductsRepository {
   }
 
   @override
-  Future<ProductItem> getProduct(int id) async {
+  Future<ProductDetails> getProduct(int id) async {
     try {
       final response = await dio.get('https://fakestoreapi.com/products/$id');
       dynamic data = response.data;
 
-      return ProductItem.fromJson(data);
+      return ProductDetails.fromJson(data);
     } catch (error) {
       throw Exception('Не удалось загрузить продукт: $error');
     }

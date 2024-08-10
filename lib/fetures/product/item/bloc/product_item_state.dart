@@ -15,7 +15,7 @@ class ProductItemLoading extends ProductItemState {
 class ProductItemLoaded extends ProductItemState {
   ProductItemLoaded({required this.productItem});
 
-  final ProductItem productItem;
+  final ProductDetails productItem;
 
   @override
   List<Object?> get props => [productItem];
