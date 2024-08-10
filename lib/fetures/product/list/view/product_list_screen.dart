@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 import 'package:test_project/repositories/products/products.dart';
 import 'package:test_project/shared/widgets/custom_error_widget.dart';
 
@@ -34,6 +35,15 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('Product list'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          TalkerScreen(talker: GetIt.I<Talker>())));
+                },
+                icon: const Icon(Icons.document_scanner_outlined))
+          ],
         ),
         body: RefreshIndicator(
           onRefresh: () async {

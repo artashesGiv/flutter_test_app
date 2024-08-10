@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 import 'package:test_project/repositories/products/products.dart';
 
 part 'product_item_event.dart';
@@ -18,8 +20,9 @@ class ProductItemBloc extends Bloc<ProductItemEvent, ProductItemState> {
         final productItem =
             await productsRepository.getProduct(event.productId);
         emit(ProductItemLoaded(productItem: productItem));
-      } catch (error) {
+      } catch (error, st) {
         emit(ProductItemLoadingError(error: error));
+        GetIt.I<Talker>().handle(error, st);
       } finally {
         event.compliter?.complete();
       }
@@ -27,4 +30,10 @@ class ProductItemBloc extends Bloc<ProductItemEvent, ProductItemState> {
   }
 
   final AbstractProductsRepository productsRepository;
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    GetIt.I<Talker>().handle(error, stackTrace);
+    super.onError(error, stackTrace);
+  }
 }
