@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -9,44 +10,26 @@ import 'package:test_project/shared/widgets/custom_error_widget.dart';
 import '../bloc/product_item_bloc.dart';
 import '../widgets/widgets.dart';
 
+@RoutePage()
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+  const ProductScreen(
+      {super.key, required this.productName, required this.productId});
+
+  final String productName;
+  final int productId;
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
 }
 
-class ProductScreenArgs {
-  ProductScreenArgs({required this.title, required this.id});
-
-  final String title;
-  final int id;
-}
-
 class _ProductScreenState extends State<ProductScreen> {
-  String? productName;
-  int? productId;
-
   final _productItemBloc =
       ProductItemBloc(GetIt.I<AbstractProductsRepository>());
 
   @override
-  void didChangeDependencies() {
-    final args = ModalRoute.of(context)?.settings.arguments;
-
-    assert(args is ProductScreenArgs, 'Невалидные аргументы');
-
-    final myArgs = args as ProductScreenArgs;
-    productName = myArgs.title;
-    productId = myArgs.id;
-
-    if (productId != null) {
-      _productItemBloc.add(LoadProductItem(productId: productId!));
-    }
-
-    setState(() {});
-
-    super.didChangeDependencies();
+  void initState() {
+    _productItemBloc.add(LoadProductItem(productId: widget.productId));
+    super.initState();
   }
 
   @override
@@ -54,14 +37,14 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text(productName ?? '...'),
+        title: Text(widget.productName),
         backgroundColor: Colors.white,
       ),
       body: RefreshIndicator(
         onRefresh: () async {
           final compliter = Completer();
-          _productItemBloc.add(
-              LoadProductItem(compliter: compliter, productId: productId!));
+          _productItemBloc.add(LoadProductItem(
+              compliter: compliter, productId: widget.productId));
           return compliter.future;
         },
         child: BlocBuilder<ProductItemBloc, ProductItemState>(
@@ -87,7 +70,7 @@ class _ProductScreenState extends State<ProductScreen> {
               return CustomErrorWidget(
                   onUpdate: () => {
                         _productItemBloc
-                            .add(LoadProductItem(productId: productId!))
+                            .add(LoadProductItem(productId: widget.productId))
                       });
             }
 

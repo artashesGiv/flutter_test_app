@@ -5,17 +5,23 @@ import 'package:talker_flutter/talker_flutter.dart';
 import 'router/router.dart';
 import 'theme/theme.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final _appRouter = AppRouter();
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: lightTheme,
-      routes: routes,
-      initialRoute: '/products',
-      navigatorObservers: [TalkerRouteObserver(GetIt.I<Talker>())],
+      routerConfig: _appRouter.config(
+          navigatorObservers: () => [TalkerRouteObserver(GetIt.I<Talker>())]),
     );
   }
 }

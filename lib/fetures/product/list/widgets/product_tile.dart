@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:test_project/fetures/product/item/view/view.dart';
 import 'package:test_project/repositories/products/products.dart';
+import 'package:test_project/router/router.gr.dart';
 
 class ProductTile extends StatelessWidget {
   const ProductTile({
@@ -28,8 +29,8 @@ class ProductTile extends StatelessWidget {
       subtitle: Text(product.description,
           style: theme.textTheme.labelMedium, overflow: TextOverflow.ellipsis),
       onTap: () => {
-        Navigator.of(context).pushNamed('/product',
-            arguments: ProductScreenArgs(title: product.title, id: product.id))
+        AutoRouter.of(context).push(
+            ProductRoute(productName: product.title, productId: product.id))
       },
     );
   }
