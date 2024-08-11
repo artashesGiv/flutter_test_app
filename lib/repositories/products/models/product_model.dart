@@ -1,11 +1,15 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product_model.g.dart';
 
+@HiveType(typeId: 1)
 @JsonSerializable()
 class Rating {
+  @HiveField(0)
   final double rate;
+  @HiveField(1)
   final int count;
 
   const Rating({
@@ -18,8 +22,22 @@ class Rating {
   Map<String, dynamic> toJson() => _$RatingToJson(this);
 }
 
+@HiveType(typeId: 2)
 @JsonSerializable()
 class Product extends Equatable {
+  @HiveField(0)
+  final int id;
+  @HiveField(1)
+  final String title;
+  @HiveField(2)
+  final double price;
+  @HiveField(3)
+  final String category;
+  @HiveField(4)
+  final String description;
+  @HiveField(5)
+  final String image;
+
   const Product({
     required this.id,
     required this.title,
@@ -28,13 +46,6 @@ class Product extends Equatable {
     required this.description,
     required this.image,
   });
-
-  final int id;
-  final String title;
-  final double price;
-  final String category;
-  final String description;
-  final String image;
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
@@ -45,8 +56,10 @@ class Product extends Equatable {
   List<Object?> get props => [id, title, price, category, description, image];
 }
 
+@HiveType(typeId: 3)
 @JsonSerializable()
 class ProductDetails extends Product {
+  @HiveField(6)
   final Rating rating;
 
   const ProductDetails({

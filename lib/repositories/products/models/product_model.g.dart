@@ -3,6 +3,148 @@
 part of 'product_model.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class RatingAdapter extends TypeAdapter<Rating> {
+  @override
+  final int typeId = 1;
+
+  @override
+  Rating read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Rating(
+      rate: fields[0] as double,
+      count: fields[1] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Rating obj) {
+    writer
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write(obj.rate)
+      ..writeByte(1)
+      ..write(obj.count);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RatingAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class ProductAdapter extends TypeAdapter<Product> {
+  @override
+  final int typeId = 2;
+
+  @override
+  Product read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Product(
+      id: fields[0] as int,
+      title: fields[1] as String,
+      price: fields[2] as double,
+      category: fields[3] as String,
+      description: fields[4] as String,
+      image: fields[5] as String,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Product obj) {
+    writer
+      ..writeByte(6)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.price)
+      ..writeByte(3)
+      ..write(obj.category)
+      ..writeByte(4)
+      ..write(obj.description)
+      ..writeByte(5)
+      ..write(obj.image);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProductAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class ProductDetailsAdapter extends TypeAdapter<ProductDetails> {
+  @override
+  final int typeId = 3;
+
+  @override
+  ProductDetails read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return ProductDetails(
+      id: fields[0] as int,
+      title: fields[1] as String,
+      price: fields[2] as double,
+      category: fields[3] as String,
+      description: fields[4] as String,
+      image: fields[5] as String,
+      rating: fields[6] as Rating,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, ProductDetails obj) {
+    writer
+      ..writeByte(7)
+      ..writeByte(6)
+      ..write(obj.rating)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.price)
+      ..writeByte(3)
+      ..write(obj.category)
+      ..writeByte(4)
+      ..write(obj.description)
+      ..writeByte(5)
+      ..write(obj.image);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProductDetailsAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
